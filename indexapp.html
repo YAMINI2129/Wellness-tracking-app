@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        input {
+            padding: 10px;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Wellness Tracker</h1>
+
+    <label for="waterInput">Enter Water Intake (ml):</label>
+    <input type="number" id="waterInput" placeholder="Enter in ml">
+
+    <br>
+
+    <label for="sleepInput">Enter Sleep Time (hours):</label>
+    <input type="number" id="sleepInput" placeholder="Enter in hours">
+
+    <br>
+
+    <label for="walkingInput">Enter Walking Time (minutes):</label>
+    <input type="number" id="walkingInput" placeholder="Enter in minutes">
+
+    <br>
+
+    <label for="meditationInput">Enter Meditation Time (minutes):</label>
+    <input type="number" id="meditationInput" placeholder="Enter in minutes">
+
+    <br>
+
+    <button onclick="logActivities()">Log Daily Activities</button>
+    <p id="serverLink"></p>
+
+    <script>
+        function logActivities() {
+            const waterInput = document.getElementById('waterInput').value;
+            const sleepInput = document.getElementById('sleepInput').value;
+            const walkingInput = document.getElementById('walkingInput').value;
+            const meditationInput = document.getElementById('meditationInput').value;
+
+            const currentTime = new Date();
+            const lastLoggedTime = localStorage.getItem('lastLoggedTime');
+
+            if (!lastLoggedTime || (currentTime - new Date(lastLoggedTime)) >= (24 * 60 * 60 * 1000)) {
+                alert(`Water Intake: ${waterInput} ml\nSleep Time: ${sleepInput} hours\nWalking Time: ${walkingInput} minutes\nMeditation Time: ${meditationInput} minutes`);
+                
+                // Save the current time as the last logged time
+                localStorage.setItem('lastLoggedTime', currentTime);
+
+                // Dynamically generate and display the server link
+                const serverLink = document.getElementById('serverLink');
+                serverLink.innerHTML = `Access your activities <a href="${window.location.href}" target="_blank">${window.location.href}</a>`;
+            } else {
+                alert("You can log activities only once in a 24-hour period.");
+            }
+        }
+    </script>
+
+</body>
+</html>
